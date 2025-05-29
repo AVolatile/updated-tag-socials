@@ -19,33 +19,36 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
   const main = palette.neutral.main;
   const medium = palette.neutral.medium;
 
-  // ✅ Safely check if friend exists in friends list
+  // ✅ More robust friend check
   const isFriend = Array.isArray(friends)
-    ? friends.find((friend) => friend._id === friendId)
+    ? friends.some(
+        (friend) =>
+          friend._id === friendId || friend.id === friendId || friend === friendId
+      )
     : false;
 
+  // ✅ Patch friendship status
   const patchFriend = async () => {
-try {
-  const response = await fetch(
-    `${process.env.REACT_APP_API_URL}/users/${_id}/${friendId}`,
-    {
-      method: "PATCH",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    }
-  );
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/users/${_id}/${friendId}`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
       const data = await response.json();
 
-      // ✅ Ensure data is an array before updating Redux
       if (Array.isArray(data)) {
         dispatch(setFriends({ friends: data }));
       } else {
-        console.warn("⚠️ Unexpected friends response:", data);
+        console.warn("⚠️ Unexpected response format from friend patch:", data);
       }
     } catch (err) {
-      console.error("❌ Failed to patch friend:", err.message);
+      console.error("❌ Failed to update friend status:", err.message);
     }
   };
 

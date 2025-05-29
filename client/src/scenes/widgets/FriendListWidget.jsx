@@ -2,15 +2,18 @@ import { Box, Typography, useTheme } from "@mui/material";
 import Friend from "components/Friend";
 import WidgetWrapper from "components/WidgetWrapper";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setFriends } from "state";
 
-// ✅ Use env variable or fallback to localhost
+// ✅ Use env variable or fallback
 const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
+
 const FriendListWidget = ({ userId }) => {
   const { palette } = useTheme();
   const token = useSelector((state) => state.token);
-  const [friends, setFriends] = useState([]);
+  const [friends, setFriendsList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
 
   const getFriends = async () => {
     setLoading(true);
@@ -21,12 +24,14 @@ const FriendListWidget = ({ userId }) => {
       });
 
       if (!response.ok) throw new Error("Failed to fetch friends");
-
       const data = await response.json();
-      setFriends(data);
+
+      // ✅ Update local and global friends list
+      setFriendsList(data);
+      dispatch(setFriends({ friends: data }));
     } catch (err) {
       console.error("❌ Error loading friends:", err.message);
-      setFriends([]);
+      setFriendsList([]);
     } finally {
       setLoading(false);
     }
