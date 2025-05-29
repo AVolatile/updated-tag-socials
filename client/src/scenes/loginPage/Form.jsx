@@ -94,7 +94,7 @@ const register = async (values, onSubmitProps) => {
 
 
   const login = async (values, onSubmitProps) => {
-    const loggedInResponse = await fetch("`${process.env.REACT_APP_API_URL}/users/${_id}/${friendId}`/auth/login", {
+    const loggedInResponse = await fetch(`${process.env.REACT_APP_API_URL}/users/${_id}/${friendId}`/auth/login, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
