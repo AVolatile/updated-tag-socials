@@ -17,27 +17,28 @@ const ProfilePage = () => {
   const loggedInUser = useSelector((state) => state.user); // ✅ logged-in user
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
 
-  const getUser = async () => {
-    const response = await fetch(``${process.env.REACT_APP_API_URL}/users/${_id}/${friendId}`/users/${userId}`, {
-      method: "GET",
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    const data = await response.json();
-    setUser(data);
-  };
+const getUser = async () => {
+  const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${userId}`, {
+    method: "GET",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  const data = await response.json();
+  setUser(data);
+};
 
-  const handleSave = async (formData) => {
-    const response = await fetch(``${process.env.REACT_APP_API_URL}/users/${_id}/${friendId}`/users/${userId}`, {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      body: formData,
-    });
+const handleSave = async (formData) => {
+  const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${userId}`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  });
 
-    const updatedUser = await response.json();
-    setUser(updatedUser);
-  };
+  const updatedUser = await response.json();
+  setUser(updatedUser);
+};
+
 
   useEffect(() => {
     getUser();

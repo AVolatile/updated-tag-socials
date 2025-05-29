@@ -25,10 +25,11 @@ const UserWidget = ({ userId, picturePath, setEditOpen }) => {
   const main = palette.neutral.main;
 
   const getUser = async () => {
-    const response = await fetch(``${process.env.REACT_APP_API_URL}/users/${_id}/${friendId}`/users/${userId}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${userId}`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
+
     const data = await response.json();
     setUser(data);
   };
@@ -77,7 +78,6 @@ const UserWidget = ({ userId, picturePath, setEditOpen }) => {
           </Box>
         </FlexBetween>
 
-        {/* Only show edit icon for logged-in user's profile */}
         {loggedInUserId === userId && setEditOpen && (
           <ManageAccountsOutlined
             onClick={() => setEditOpen(true)}

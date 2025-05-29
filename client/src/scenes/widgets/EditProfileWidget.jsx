@@ -35,7 +35,7 @@ const EditProfileWidget = ({ open, onClose, user, onSave }) => {
       };
       setForm(initial);
       setOriginalForm(initial);
-      setPreviewUrl(``${process.env.REACT_APP_API_URL}/users/${_id}/${friendId}`/assets/${user.picturePath}`);
+      setPreviewUrl(`${process.env.REACT_APP_API_URL}/assets/${user.picturePath}`);
     }
   }, [user]);
 
