@@ -20,7 +20,7 @@ const AdvertWidget = () => {
         width="100%"
         height="auto"
         alt="advert"
-        src={`${process.env.REACT_APP_API_URL}/users/${_id}/${friendId}/assets/info4.jpeg`}
+        src={`/assets/info4.jpeg`}
         style={{ borderRadius: "0.75rem", margin: "0.75rem 0" }}
       />
       <FlexBetween>
