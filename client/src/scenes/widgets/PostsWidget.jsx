@@ -29,17 +29,17 @@ const PostsWidget = ({ userId, isProfile = false }) => {
     dispatch(setPosts({ posts: data }));
   };
 
-  useEffect(() => {
-    if (isProfile) {
-      getUserPosts();
-    } else {
-      getPosts();
-    }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+useEffect(() => {
+  if (isProfile) {
+    getUserPosts();
+  } else {
+    getPosts();
+  }
+}, [isProfile, userId]); // <- 👈 include userId
 
   return (
     <>
-      {posts.map(
+      {Array.isArray(posts) && posts.map(
         ({
           _id,
           userId,

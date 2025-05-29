@@ -12,11 +12,14 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const UserWidget = ({ userId, picturePath }) => {
+const UserWidget = ({ userId, picturePath, setEditOpen }) => {
   const [user, setUser] = useState(null);
   const { palette } = useTheme();
   const navigate = useNavigate();
+
   const token = useSelector((state) => state.token);
+  const loggedInUserId = useSelector((state) => state.user._id);
+
   const dark = palette.neutral.dark;
   const medium = palette.neutral.medium;
   const main = palette.neutral.main;
@@ -32,11 +35,9 @@ const UserWidget = ({ userId, picturePath }) => {
 
   useEffect(() => {
     getUser();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [userId]);
 
-  if (!user) {
-    return null;
-  }
+  if (!user) return null;
 
   const {
     firstName,
@@ -72,10 +73,20 @@ const UserWidget = ({ userId, picturePath }) => {
             >
               {firstName} {lastName}
             </Typography>
-            <Typography color={medium}>{friends.length} friends</Typography>
+            <Typography color={medium}>{friends?.length || 0} friends</Typography>
           </Box>
         </FlexBetween>
-        <ManageAccountsOutlined />
+
+        {/* Only show edit icon for logged-in user's profile */}
+        {loggedInUserId === userId && setEditOpen && (
+          <ManageAccountsOutlined
+            onClick={() => setEditOpen(true)}
+            sx={{
+              cursor: "pointer",
+              "&:hover": { color: palette.primary.main },
+            }}
+          />
+        )}
       </FlexBetween>
 
       <Divider />

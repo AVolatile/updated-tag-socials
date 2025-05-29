@@ -37,6 +37,35 @@ const UserSchema = new mongoose.Schema(
     occupation: String,
     viewedProfile: Number,
     impressions: Number,
+
+    // ✅ NEW: Notifications array
+    notifications: [
+      {
+        type: {
+          type: String, // "like", "comment", "friend"
+          required: true,
+        },
+        fromUserId: {
+          type: String,
+          required: true,
+        },
+        postId: {
+          type: String,
+        },
+        message: {
+          type: String,
+          required: true,
+        },
+        isRead: {
+          type: Boolean,
+          default: false,
+        },
+        createdAt: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
   },
   { timestamps: true }
 );

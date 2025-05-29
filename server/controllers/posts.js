@@ -19,12 +19,12 @@ export const createPost = async (req, res) => {
     });
     await newPost.save();
 
-    const post = await Post.find();
-    res.status(201).json(post);
+    res.status(201).json(newPost); // ✅ only return the created post
   } catch (err) {
     res.status(409).json({ message: err.message });
   }
 };
+
 
 /* READ */
 export const getFeedPosts = async (req, res) => {
@@ -58,6 +58,24 @@ export const likePost = async (req, res) => {
       post.likes.delete(userId);
     } else {
       post.likes.set(userId, true);
+
+      // 🔔 Notify the post owner if it's not the liker themselves
+      if (post.userId !== userId) {
+        const liker = await User.findById(userId);
+
+        await User.findByIdAndUpdate(post.userId, {
+          $push: {
+            notifications: {
+              type: "like",
+              fromUserId: userId,
+              postId: post._id,
+              message: `${liker.firstName} ${liker.lastName} liked your post.`,
+              isRead: false,
+              createdAt: new Date(),
+            },
+          },
+        });
+      }
     }
 
     const updatedPost = await Post.findByIdAndUpdate(

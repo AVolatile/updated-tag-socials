@@ -19,21 +19,34 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
   const main = palette.neutral.main;
   const medium = palette.neutral.medium;
 
-  const isFriend = friends.find((friend) => friend._id === friendId);
+  // ✅ Safely check if friend exists in friends list
+  const isFriend = Array.isArray(friends)
+    ? friends.find((friend) => friend._id === friendId)
+    : false;
 
   const patchFriend = async () => {
-    const response = await fetch(
-      `http://localhost:3001/users/${_id}/${friendId}`,
-      {
-        method: "PATCH",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
+    try {
+      const response = await fetch(
+        `http://localhost:3001/users/${_id}/${friendId}`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = await response.json();
+
+      // ✅ Ensure data is an array before updating Redux
+      if (Array.isArray(data)) {
+        dispatch(setFriends({ friends: data }));
+      } else {
+        console.warn("⚠️ Unexpected friends response:", data);
       }
-    );
-    const data = await response.json();
-    dispatch(setFriends({ friends: data }));
+    } catch (err) {
+      console.error("❌ Failed to patch friend:", err.message);
+    }
   };
 
   return (
@@ -43,7 +56,6 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
         <Box
           onClick={() => {
             navigate(`/profile/${friendId}`);
-            navigate(0);
           }}
         >
           <Typography
@@ -65,7 +77,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
         </Box>
       </FlexBetween>
       <IconButton
-        onClick={() => patchFriend()}
+        onClick={patchFriend}
         sx={{ backgroundColor: primaryLight, p: "0.6rem" }}
       >
         {isFriend ? (
@@ -78,4 +90,4 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
   );
 };
 
-export default Friend; 
+export default Friend;
