@@ -56,6 +56,12 @@ app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
 
+/* ROOT CHECK */
+app.get("/", (req, res) => {
+  res.send("✅ API is running!");
+});
+
+
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 6001;
 console.log("🔍 MONGO_URL:", process.env.MONGO_URL);
