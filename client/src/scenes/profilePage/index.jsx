@@ -18,7 +18,7 @@ const ProfilePage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
 
   const getUser = async () => {
-    const response = await fetch(`http://localhost:3001/users/${userId}`, {
+    const response = await fetch(``${process.env.REACT_APP_API_URL}/users/${_id}/${friendId}`/users/${userId}`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -27,7 +27,7 @@ const ProfilePage = () => {
   };
 
   const handleSave = async (formData) => {
-    const response = await fetch(`http://localhost:3001/users/${userId}`, {
+    const response = await fetch(``${process.env.REACT_APP_API_URL}/users/${_id}/${friendId}`/users/${userId}`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${token}`,

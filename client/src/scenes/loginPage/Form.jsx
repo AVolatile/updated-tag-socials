@@ -70,7 +70,7 @@ const register = async (values, onSubmitProps) => {
 
     console.log("📸 Uploading picture:", values.picture.name);
 
-    const savedUserResponse = await fetch("http://localhost:3001/auth/register", {
+    const savedUserResponse = await fetch("`${process.env.REACT_APP_API_URL}/users/${_id}/${friendId}`/auth/register", {
       method: "POST",
       body: formData,
     });
@@ -94,7 +94,7 @@ const register = async (values, onSubmitProps) => {
 
 
   const login = async (values, onSubmitProps) => {
-    const loggedInResponse = await fetch("http://localhost:3001/auth/login", {
+    const loggedInResponse = await fetch("`${process.env.REACT_APP_API_URL}/users/${_id}/${friendId}`/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),

@@ -25,17 +25,17 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
     : false;
 
   const patchFriend = async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:3001/users/${_id}/${friendId}`,
-        {
-          method: "PATCH",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+try {
+  const response = await fetch(
+    `${process.env.REACT_APP_API_URL}/users/${_id}/${friendId}`,
+    {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    }
+  );
       const data = await response.json();
 
       // ✅ Ensure data is an array before updating Redux

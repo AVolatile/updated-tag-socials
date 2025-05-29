@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 // ✅ Use env variable or fallback to localhost
-const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
+const BASE_URL = process.env.REACT_APP_API_URL || "`${process.env.REACT_APP_API_URL}/users/${_id}/${friendId}`";
 
 const FriendListWidget = ({ userId }) => {
   const { palette } = useTheme();
