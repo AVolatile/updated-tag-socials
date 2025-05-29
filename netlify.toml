@@ -1,7 +1,7 @@
 [build]
   base = "client"
   command = "npm run build"
-  publish = "client/build"
+  publish = "build"
 
 [build.environment]
   REACT_APP_API_URL = "https://tag-lk9t.onrender.com"
