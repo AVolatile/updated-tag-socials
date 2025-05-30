@@ -1,0 +1,30 @@
+# 🔗 Tagged - A Modern MERN Social Platform
+
+Welcome to **Tagged**, a sleek and modern full-stack social media application built using the MERN stack (MongoDB, Express.js, React.js, and Node.js). Users can create accounts, upload posts, connect with friends, like and comment, and even update their profiles. Designed for speed, security, and social interaction.
+
+## 🧠 Features
+
+- 🔐 **Authentication**: Secure login and registration with JWT and bcrypt
+- 📝 **Posts**: Create, edit, delete, and view posts with image support
+- 📸 **Image Uploads**: Post and profile images using Multer
+- 🧑‍🤝‍🧑 **Friends System**: Follow/unfollow and see a live-updated friend list
+- 💬 **Comments & Likes**: React to posts in real time
+- 🎨 **Dark Mode Support** *(optional)*
+- 🖼️ **Responsive UI**: Fully mobile-friendly with Material-UI
+- ⚙️ **Profile Customization**: Update bio, profile image, and more
+- 📢 **Notifications** *(coming soon)*
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend**: React, Redux Toolkit, Material UI
+- **Backend**: Node.js, Express.js
+- **Database**: MongoDB (Cloud via MongoDB Atlas)
+- **Auth**: JSON Web Token (JWT), bcrypt
+- **Hosting**: Client - Netlify | Server - Render
+
+---
+
+## 📁 Project Structure
+
